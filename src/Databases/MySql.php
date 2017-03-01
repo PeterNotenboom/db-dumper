@@ -180,7 +180,7 @@ class MySql extends DbDumper
         }
 
         if ($this->useCompressed) {
-            $command[] = "| gzip > \"{$dumpFile}.gz\"";
+            $command[] = "| gzip > \"{$dumpFile}\""; // Recommended to add ".gz" to dumpToFile() string
         }
         else {
             $command[] = "> \"{$dumpFile}\"";
