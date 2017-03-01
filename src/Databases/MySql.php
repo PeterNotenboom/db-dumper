@@ -17,6 +17,9 @@ class MySql extends DbDumper
     /** @var bool */
     protected $useSingleTransaction = false;
 
+    /** @var bool */
+    protected $useCompressed = false;
+    
     public function __construct()
     {
         $this->port = 3306;
@@ -42,6 +45,26 @@ class MySql extends DbDumper
         return $this;
     }
 
+    /**
+     * @return $this
+     */
+    public function useCompressed()
+    {
+        $this->useCompressed = true;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function dontUseCompressed()
+    {
+        $this->useCompressed = false;
+
+        return $this;
+    }
+    
     /**
      * @return $this
      */
@@ -157,6 +180,10 @@ class MySql extends DbDumper
         }
 
         $command[] = "> \"{$dumpFile}\"";
+        
+        if ($this->useCompressed) {
+            $command[] = "| gzip > \"{$dumpFile}.gz\"";
+        }
 
         return implode(' ', $command);
     }
