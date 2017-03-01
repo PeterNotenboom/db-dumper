@@ -179,10 +179,11 @@ class MySql extends DbDumper
             $command[] = implode(' ', $this->includeTables);
         }
 
-        $command[] = "> \"{$dumpFile}\"";
-        
         if ($this->useCompressed) {
             $command[] = "| gzip > \"{$dumpFile}.gz\"";
+        }
+        else {
+            $command[] = "> \"{$dumpFile}\"";
         }
 
         return implode(' ', $command);
